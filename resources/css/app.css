@@ -1,0 +1,14 @@
+
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/*--------------------------------------------------------------
+# Login
+--------------------------------------------------------------*/
+.bg-login {
+    background-color: #ffffff !important;
+}
+
+

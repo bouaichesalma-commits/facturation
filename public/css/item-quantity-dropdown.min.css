@@ -1,0 +1,283 @@
+html {
+    box-sizing: border-box
+}
+
+html * {
+    box-sizing: inherit
+}
+
+html *::after,
+html *::before {
+    box-sizing: inherit
+}
+
+body {
+    margin: 0;
+    position: inherit
+}
+
+.iqdropdown {
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box
+}
+
+.iqdropdown * {
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box
+}
+
+.iqdropdown *::after,
+.iqdropdown *::before {
+    box-sizing: inherit
+}
+
+.iqdropdown *:not(input) {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+.iqdropdown *:focus {
+    outline: none
+}
+
+.iqdropdown h1,
+.iqdropdown h2,
+.iqdropdown h3,
+.iqdropdown h4,
+.iqdropdown h5,
+.iqdropdown h6 {
+    margin: 0
+}
+
+.iqdropdown p {
+    margin: 0
+}
+
+.iqdropdown ul,
+.iqdropdown ol {
+    list-style-type: none;
+    margin: 0;
+    padding: 0
+}
+
+.iqdropdown a {
+    cursor: pointer
+}
+
+.iqdropdown button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    margin: 0;
+    padding: 0
+}
+
+.iqdropdown select::-ms-expand {
+    display: none
+}
+
+.iqdropdown input::-ms-clear {
+    display: none;
+    height: 0;
+    width: 0
+}
+
+.iqdropdown .icon-decrement {
+    display: inline-block;
+    height: 15px;
+    margin: auto;
+    min-width: 15px;
+    position: relative;
+    width: 15px
+}
+
+.iqdropdown .icon-decrement::after {
+    background: #002674;
+    content: '';
+    display: block;
+    height: 3px;
+    position: absolute;
+    top: 6px;
+    transition: -webkit-transform 0.25s ease-in-out;
+    transition: transform 0.25s ease-in-out;
+    transition: transform 0.25s ease-in-out, -webkit-transform 0.25s ease-in-out;
+    width: 15px
+}
+
+.iqdropdown .icon-decrement.icon-increment::before {
+    background: #002674;
+    content: '';
+    display: block;
+    height: 3px;
+    position: absolute;
+    top: 6px;
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+    transition: -webkit-transform 0.25s ease-in-out;
+    transition: transform 0.25s ease-in-out;
+    transition: transform 0.25s ease-in-out, -webkit-transform 0.25s ease-in-out;
+    width: 15px
+}
+
+.iqdropdown .iqdropdown-menu {
+    background-color: #FFFFFF;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    cursor: default;
+    display: none;
+    left: 0;
+    margin: -2px -1px -1px;
+    position: absolute;
+    right: 0;
+    top: 50px;
+    transition: all 0.2s ease-in-out;
+    z-index: 99999
+}
+
+.iqdropdown .iqdropdown-menu-option {
+    align-items: center;
+    display: flex;
+    height: 75px;
+    padding: 0 15px
+}
+
+.iqdropdown .iqdropdown-menu-option:last-child {
+    border: 0
+}
+
+.iqdropdown .iqdropdown-menu-close {
+    color: #002674;
+    font-family: "OpenSans", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    height: 20px;
+    margin: 20px 0;
+    padding: 0 15px;
+    text-align: right;
+    width: 100%
+}
+
+.iqdropdown.menu-open .iqdropdown-menu {
+    display: block
+}
+
+@media only screen and (max-width: 640px) {
+    .iqdropdown .iqdropdown-menu.mobile-top-menu {
+        top: -285px
+    }
+}
+
+.iqdropdown-content {
+    flex: 1;
+    padding-right: 10px
+}
+
+.iqdropdown-item {
+    color: #000;
+    font-family: "OpenSans", sans-serif;
+    font-size: 17px;
+    font-weight: 400
+}
+
+.iqdropdown p.iqdropdown-description {
+    color: #4A4A4A;
+    font-family: "OpenSans", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 5px
+}
+
+.iqdropdown .iqdropdown-item-controls {
+    display: flex;
+    height: 45px
+}
+
+.iqdropdown .iqdropdown-item-controls .counter {
+    color: #4A4A4A;
+    font-family: "OpenSans", sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    border-bottom: 1px solid #E2E2E2;
+    border-top: 1px solid #E2E2E2;
+    padding: 11px 20px
+}
+
+.iqdropdown .iqdropdown-item-controls button {
+    align-items: center;
+    border: 1px solid #E2E2E2;
+    display: flex;
+    height: 45px;
+    padding: 0 20px;
+    transition: all 0.2s ease-in-out
+}
+
+.iqdropdown .iqdropdown-item-controls button:hover {
+    background-color: #eee
+}
+
+.iqdropdown .iqdropdown-item-controls button.button-decrement {
+    border-bottom-left-radius: 25px;
+    border-top-left-radius: 25px
+}
+
+.iqdropdown .iqdropdown-item-controls button.button-increment {
+    border-bottom-right-radius: 25px;
+    border-top-right-radius: 25px
+}
+
+.iqdropdown {
+    align-items: center;
+    border: 1px solid rgb(206, 212, 218);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    height: 38px;
+    justify-content: space-between;
+    padding: 0 15px;
+    position: relative;
+    width: 100%
+}
+
+.iqdropdown .iqdropdown-selection {
+    color: #4A4A4A;
+    font-family: "OpenSans", sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    flex: 1;
+    position: relative
+}
+
+.iqdropdown .iqdropdown-selection::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 40px 12px;
+    content: '';
+    display: inline-block;
+    height: 100%;
+    width: 12px;
+    position: absolute;
+    right: 0;
+}
+
+.iqdropdown.menu-open {
+    border-color: #002674
+}
+
+.iqdropdown.menu-open .iqdropdown-selection::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+}
+
+
+/*# sourceMappingURL=item-quantity-dropdown.min.css.map*/
+
+
+/* custom css */
+.iqdropdown-menu{
+    overflow: scroll;
+    height: 300px;
+}

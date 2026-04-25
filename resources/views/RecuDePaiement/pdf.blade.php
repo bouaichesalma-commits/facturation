@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Reçu de Paiement {{ $numero }} - {{ $client }}</title>
+    @include('partials.pdf_styles')
+</head>
+<body>
+    @include('partials.pdf_footer')
+    <div class="container">
+        {{-- Logo Section --}}
+        <div style="margin-bottom: 25pt;">
+            @if(!empty($agence->logo))
+                <img src="{{ public_path($agence->logo) }}" style="height: 60pt; width: auto;" alt="Logo">
+            @else
+                <img src="{{ public_path('img/logo.png') }}" style="height: 60pt; width: auto;" alt="Logo">
+            @endif
+        </div>
+
+        {{-- Meta Row (Document and Client) --}}
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 25pt;">
+            <tr>
+                <td style="width: 48%; border: 1pt solid #000; border-radius: 10pt; padding: 10pt; text-align: center; vertical-align: middle;">
+                    <span style="font-size: 16pt; font-weight: bold;">RECU : {{ $numero }}</span>
+                </td>
+                <td style="width: 4%;"></td> {{-- Gap --}}
+                <td style="width: 48%; border: 1pt solid #000; border-radius: 10pt; padding: 10pt; text-align: center; vertical-align: middle;">
+                    <div style="font-size: 14pt; font-weight: bold; text-transform: uppercase;">{{ $client }}</div>
+                    @if($ice) <div style="font-size: 11pt; margin-top: 5pt; font-weight: bold;">ICE : {{ $ice }}</div> @endif
+                </td>
+            </tr>
+        </table>
+
+        {{-- Date Section --}}
+        <div style="text-align: right; margin-bottom: 12pt; font-weight: bold; font-size: 11pt;">
+            Casablanca le, {{ $date }}
+        </div>
+
+        {{-- Subject --}}
+        @if($objet)
+        <div style="margin-bottom: 15pt; font-size: 12pt;">
+            <strong>Objet :</strong> {{ $objet }}
+        </div>
+        @endif
+
+        {{-- Items Table --}}
+        <table class="items-table">
+            <thead>
+                <tr>
+                    <th style="width: 8%;">N°</th>
+                    <th style="width: 52%; text-align: left; padding-left: 10pt;">Désignation</th>
+                    <th style="width: 10%;">Qté</th>
+                    <th style="width: 15%;">P.U</th>
+                    <th style="width: 15%;">TOTAL</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($articles as $index => $article)
+                    @if(!$loop->last)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td class="designation">
+                                {{ $article->designation ?? $article->produit }}
+                            </td>
+                            <td>{{ $article->pivot->quantity }}</td>
+                            <td>{{ number_format($article->prix, 2, ',', ' ') }}</td>
+                            <td>{{ number_format($article->prix * $article->pivot->quantity, 2, ',', ' ') }}</td>
+                        </tr>
+                    @else
+                        <tr style="page-break-inside: avoid !important;">
+                            <td colspan="5" style="padding: 0; border: none !important;">
+                                <table class="nested-table">
+                                    <tr>
+                                        <td style="width: 8%;">{{ $index + 1 }}</td>
+                                        <td class="designation" style="width: 52%;">
+                                            {{ $article->designation ?? $article->produit }}
+                                        </td>
+                                        <td style="width: 10%;">{{ $article->pivot->quantity }}</td>
+                                        <td style="width: 15%;">{{ number_format($article->prix, 2, ',', ' ') }}</td>
+                                        <td style="width: 15%;">{{ number_format($article->prix * $article->pivot->quantity, 2, ',', ' ') }}</td>
+                                    </tr>
+                                    @php
+                                        $totalsRows = 2; // HT and TTC
+                                        if($total_Remise > 0) $totalsRows++;
+                                    @endphp
+                                    {{-- Totals --}}
+                                    <tr>
+                                        <td colspan="2" rowspan="{{ $totalsRows }}" style="vertical-align: top; border-left: none !important; border-bottom: none !important; border-right: 1pt solid #000; border-top: 1pt solid #000;">
+                                            <div class="signature-wrapper">
+                                                @if(!empty($agence->signature))
+                                                    <img src="{{ public_path($agence->signature) }}" class="sig-img" alt="Signature">
+                                                @endif
+                                                @if(!empty($agence->cachet))
+                                                    <img src="{{ public_path($agence->cachet) }}" class="cac-img" alt="Cachet">
+                                                @endif
+                                            </div>
+                                        </td>
+                                        <td colspan="2" style="font-weight: bold; text-align: center; text-transform: uppercase; border-top: 1pt solid #000;">TOTAL HT</td>
+                                        <td style="font-weight: bold; text-align: center; border-top: 1pt solid #000;">{{ number_format($total_ht, 2, ',', ' ') }}</td>
+                                    </tr>
+                                    @if($total_Remise > 0)
+                                    <tr>
+                                        <td colspan="2" style="font-weight: bold; text-align: center; text-transform: uppercase;">REMISE</td>
+                                        <td style="font-weight: bold; text-align: center;">{{ number_format($total_Remise, 2, ',', ' ') }}</td>
+                                    </tr>
+                                    @endif
+                                    <tr>
+                                        <td colspan="2" style="font-weight: bold; text-align: center; text-transform: uppercase;">TVA 20%</td>
+                                        <td style="font-weight: bold; text-align: center;">{{ number_format($total_tva, 2, ',', ' ') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="font-weight: bold; text-align: center; text-transform: uppercase;">TOTAL TTC</td>
+                                        <td style="font-weight: bold; text-align: center;">{{ number_format($total_ttc, 2, ',', ' ') }}</td>
+                                    </tr>
+                                    {{-- Stock Sentence as footnote row --}}
+                                    <tr>
+                                        <td colspan="5" class="table-footnote">
+                                            Les tarifs ci-dessus sont valables jusqu’à épuisement des stocks.
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    @endif
+                @endforeach
+            </tbody>
+        </table>
+
+        {{-- Words --}}
+        <div style="margin-top: 15pt; font-weight: bold; font-size: 11pt; page-break-inside: avoid;">
+            Arrêté le présent reçu à la somme de : <span style="text-transform: uppercase;">{{ $total_words }} TTC</span>
+        </div>
+
+    </div>
+</body>
+</html>
